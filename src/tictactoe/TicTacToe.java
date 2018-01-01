@@ -1,47 +1,53 @@
 package tictactoe;
 
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
-import javax.swing.JLabel;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicBorders;
 
 public class TicTacToe extends JFrame implements ActionListener{
     JLabel jl1,jl2,jl3;
     JButton jb1;
+    JPanel jp1,jp2;
     JButton jb[]=new JButton[9];
     public TicTacToe(){
+        jp1=new JPanel();
+        jp2=new JPanel();
         jb1=new JButton("Reset");    
         for(int i=0;i<9;i++)
         {
-            jb[i]=new JButton(".");
-            add(jb[i]);
+            jb[i]=new JButton("");
             jb[i].addActionListener(this);
-            jb1.addActionListener(this);
+            jb[i].setBorder(new BasicBorders.ButtonBorder(Color.black, Color.black, Color.black, Color.black));
+            jp1.add(jb[i]);
         }
-        jl1=new JLabel("0");
+        jl1=new JLabel("");
         jl2=new JLabel();
         jl3=new JLabel();
-        add(jl1);add(jb1);add(jl2);add(jl3);
-        jb1.addActionListener(this);
+        setLayout(new BorderLayout());
+        jb1.setBorder(new BasicBorders.ButtonBorder(Color.black, Color.black, Color.black, Color.black));
+        jb1.setPreferredSize(new Dimension(80,25));
+        jp2.add(jl1);jp2.add(jb1);jp2.add(jl2);
+        jp2.add(jl3);add(jp1);add(jp2,BorderLayout.SOUTH);
         jb1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             for(int i=0;i<9;i++)
                 {
-                    jl1.setText("0");
+                    jl1.setText("");
                     jb[i].setEnabled(true);
-                    jb[i].setText(".");
+                    jb[i].setText("");
                     jl3.setText("");
                 }
             }
         });
-        setLayout(new FlowLayout());
+        jp1.setLayout(new GridLayout(3,3));
+        jp2.setLayout(new FlowLayout());
         
     }
     public void actionPerformed(ActionEvent ae){
+        if(jl1.getText()=="")
+            jl1.setText("0");
         int x=Integer.parseInt(jl1.getText());
         for(int i=0;i<9;i++)
         {
@@ -91,7 +97,6 @@ public class TicTacToe extends JFrame implements ActionListener{
         {
             for(int i=0;i<9;i++)
             {
-                jl1.setText("0");
                 jb[i].setEnabled(false);
                 jl3.setText("Match Drawn!!");
             }
@@ -101,7 +106,7 @@ public class TicTacToe extends JFrame implements ActionListener{
     public static void main(String args[])
     {
         TicTacToe kc=new TicTacToe();
-        kc.setSize(150,200);
+        kc.setSize(300,300);
         kc.setVisible(true);
         kc.setDefaultCloseOperation(EXIT_ON_CLOSE);
         kc.setResizable(false);
@@ -109,3 +114,4 @@ public class TicTacToe extends JFrame implements ActionListener{
         
     }
 }
+
